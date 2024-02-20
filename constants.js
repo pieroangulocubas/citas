@@ -1,3 +1,4 @@
+
 export const SERVICES={
   "Pasaportes":{
     qpId:"1",
@@ -47,5 +48,5 @@ export const SERVICES={
 
 export const availableServices=Object.keys(SERVICES)
 
-export const JSESSIONID=process.env.SESSIONID
-export const TOKEN=process.env.TOKEN
+export const JSESSIONID=process.env.s
+export const TOKEN=process.env.t

@@ -22,7 +22,6 @@ export async function reservarHora(service,date,time){
       customHeaders.append('Content-Type','application/json')
       customHeaders.append('X-CSRF-Token',TOKEN)
       customHeaders.append('Cookie',`JSESSIONID=${JSESSIONID}`)
-      console.log(RESERVE_TIME_URL(date,time))
       const response= await fetch(RESERVE_TIME_URL(date,time),{
         method:"POST",
         body:JSON.stringify(requestBody),

@@ -9,6 +9,8 @@ async function main () {
     opt = await inquirerMenu()
     switch (opt) {
       case 1:
+        /*const response = await reservarHora("Pasaportes","2024-01-03","12:54")
+        console.log(response)*/
         const service = await servicesMenu(availableServices)
         const dates = await verFechas(service)
         if (dates.length){
@@ -18,7 +20,6 @@ async function main () {
           const reservedPromises = timesSelected.map((time)=>reservarHora(service,date,time))
           Promise.allSettled(reservedPromises)
           .then(values=>{
-            console.log(values)
             values.forEach(appointmentInfo => {
               const {serviceName,time,publicId,date}=appointmentInfo.value
               if(!serviceName || !time || !publicId || !date){
