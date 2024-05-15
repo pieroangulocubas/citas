@@ -48,5 +48,5 @@ export const SERVICES={
 
 export const availableServices=Object.keys(SERVICES)
 
-export const JSESSIONID=process.env.s
-export const TOKEN=process.env.t
+export const JSESSIONID=process.env.s || "5CE13C59237FF0B1E5CBA87A6BD5DC33"
+export const TOKEN=process.env.t || "MzguMjUuNC40OVFtYXRpYyBXZWIgQm9va2luZyBpcyB2ZXJ5IHNlY3VyZSBtYWtlIHN1cmUgaXQgaXMuTW9uIE1heSAwNiAxNToyNzowNSBDRVNUIDIwMjQ="

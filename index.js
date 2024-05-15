@@ -9,8 +9,6 @@ async function main () {
     opt = await inquirerMenu()
     switch (opt) {
       case 1:
-        /*const response = await reservarHora("Pasaportes","2024-01-03","12:54")
-        console.log(response)*/
         const service = await servicesMenu(availableServices)
         const dates = await verFechas(service)
         if (dates.length){
@@ -21,12 +19,12 @@ async function main () {
           Promise.allSettled(reservedPromises)
           .then(values=>{
             values.forEach(appointmentInfo => {
-              const {serviceName,time,publicId,date}=appointmentInfo.value
-              if(!serviceName || !time || !publicId || !date){
+              const {serviceName,time,id,date}=appointmentInfo.value
+              if(!serviceName || !time || !id || !date){
                 console.log(` ${values[0].value.errorMessage} !! `.bgRed)
               }else{
                 reservedAppointments[serviceName]??=[]
-                reservedAppointments[serviceName]=[...reservedAppointments[serviceName],{publicId,time,date}]
+                reservedAppointments[serviceName]=[...reservedAppointments[serviceName],{id,time,date}]
                 console.log(`\n SE HA RESERVADO CON EXITO EL HORARIO DE LAS ${time} :C !! `.bgCyan.black)
               }
             })

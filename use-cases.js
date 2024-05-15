@@ -2,7 +2,7 @@ import { JSESSIONID, SERVICES, TOKEN } from "./constants.js"
 import { DATES_AVAILABLES_BY_SERVICE_URL, DELETE_APPOINTMENT_URL, RESERVE_TIME_URL, TIMES_BY_DATE_URL } from "./services.js"
 
 
-export async function reservarHora(service,date,time){
+export async function reservarHora(service,d,t){
   try{
     const {publicId,qpId}=SERVICES[service]
     const requestBody={
@@ -22,12 +22,22 @@ export async function reservarHora(service,date,time){
       customHeaders.append('Content-Type','application/json')
       customHeaders.append('X-CSRF-Token',TOKEN)
       customHeaders.append('Cookie',`JSESSIONID=${JSESSIONID}`)
-      const response= await fetch(RESERVE_TIME_URL(date,time),{
+      const response= await fetch(RESERVE_TIME_URL(d,t),{
         method:"POST",
         body:JSON.stringify(requestBody),
         headers:customHeaders
       })
-      return await response.json()
+      let resData={}
+      const res = await response.json()
+      if(!res.duration){
+        const {errorMessage}=res
+        resData={date:d,time:t,errorMessage}
+      }else{
+        const {date,time,created,publicId:id,serviceName}=res
+        resData={id,serviceName,date,time,created}
+      }
+      //console.log(resData)
+      return resData
   }catch(error){
     console.log(error)
     throw new Error(error)
@@ -94,7 +104,7 @@ export function verHorariosAEliminar(reservedAppointments,service,dateSelected){
 export function obtenerPublicId(reservedAppointments,service,date,timesSelected){
   const appointmentFiltered = reservedAppointments[service].filter(appointment=>appointment.date === date)
   const publicIds = timesSelected.map(time =>
-    appointmentFiltered.find(appointment => appointment.time === time).publicId
+    appointmentFiltered.find(appointment => appointment.time === time).id
   );
   return publicIds
 }
